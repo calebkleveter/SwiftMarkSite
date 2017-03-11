@@ -20,6 +20,22 @@
       </nav>
     </header>
     <section>
+      <p>Using SwiftDown is remarkably easy.</p>
+      <p>You start by adding the package to your <code>Package.swift</code></p>
+      <pre><code>
+```swift
+.Package(url: "https://github.com/calebkleveter/SwiftDown.git", majorVersion: 0, minor: 1)
+```
+    </code></pre>
+    <p>Then you import SwiftDown, create a renderer and render the Markdown to HTML</p>
+    <pre><code>
+```swift
+import SwiftDown
+
+let mdRender = MarkdownRenderer
+let html = mdRender.render(markDownText)
+```
+    </code></pre>
     </section>
     <footer></footer>
   </body>
