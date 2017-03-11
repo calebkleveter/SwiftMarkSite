@@ -8,6 +8,10 @@ body {
   margin: 0 0.5em;
 }
 
+header, section, footer {
+  margin-left: 2em;
+}
+
 code {
   color: #F08742;
 }
@@ -26,4 +30,17 @@ ul li {
 
 a {
   color: #4779bd;
+}
+
+.side-bar {
+  border-right: 1px solid black;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2em;
+}
+
+.side-bar p {
+  margin-left: 0.5em;
 }
