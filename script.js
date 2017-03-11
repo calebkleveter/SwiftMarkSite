@@ -1,0 +1,115 @@
+/*
+ * Konami-JS ~
+ * :: Now with support for touch events and multiple instances for
+ * :: those situations that call for multiple easter eggs!
+ * Code: https://github.com/snaptortoise/konami-js
+ * Examples: http://www.snaptortoise.com/konami-js
+ * Copyright (c) 2009 George Mandis (georgemandis.com, snaptortoise.com)
+ * Version: 1.4.7 (3/2/2016)
+ * Licensed under the MIT License (http://opensource.org/licenses/MIT)
+ * Tested in: Safari 4+, Google Chrome 4+, Firefox 3+, IE7+, Mobile Safari 2.2.1 and Dolphin Browser
+ */
+
+var Konami = function (callback) {
+	var konami = {
+		addEvent: function (obj, type, fn, ref_obj) {
+			if (obj.addEventListener)
+				obj.addEventListener(type, fn, false);
+			else if (obj.attachEvent) {
+				// IE
+				obj["e" + type + fn] = fn;
+				obj[type + fn] = function () {
+					obj["e" + type + fn](window.event, ref_obj);
+				}
+				obj.attachEvent("on" + type, obj[type + fn]);
+			}
+		},
+		input: "",
+		pattern: "38384040373937396665",
+		load: function (link) {
+			this.addEvent(document, "keydown", function (e, ref_obj) {
+				if (ref_obj) konami = ref_obj; // IE
+				konami.input += e ? e.keyCode : event.keyCode;
+				if (konami.input.length > konami.pattern.length)
+					konami.input = konami.input.substr((konami.input.length - konami.pattern.length));
+				if (konami.input == konami.pattern) {
+					konami.code(link);
+					konami.input = "";
+					e.preventDefault();
+					return false;
+				}
+			}, this);
+			this.iphone.load(link);
+		},
+		code: function (link) {
+			window.location = link
+		},
+		iphone: {
+			start_x: 0,
+			start_y: 0,
+			stop_x: 0,
+			stop_y: 0,
+			tap: false,
+			capture: false,
+			orig_keys: "",
+			keys: ["UP", "UP", "DOWN", "DOWN", "LEFT", "RIGHT", "LEFT", "RIGHT", "TAP", "TAP"],
+			code: function (link) {
+				konami.code(link);
+			},
+			load: function (link) {
+				this.orig_keys = this.keys;
+				konami.addEvent(document, "touchmove", function (e) {
+					if (e.touches.length == 1 && konami.iphone.capture == true) {
+						var touch = e.touches[0];
+						konami.iphone.stop_x = touch.pageX;
+						konami.iphone.stop_y = touch.pageY;
+						konami.iphone.tap = false;
+						konami.iphone.capture = false;
+						konami.iphone.check_direction();
+					}
+				});
+				konami.addEvent(document, "touchend", function (evt) {
+					if (konami.iphone.tap == true) konami.iphone.check_direction(link);
+				}, false);
+				konami.addEvent(document, "touchstart", function (evt) {
+					konami.iphone.start_x = evt.changedTouches[0].pageX;
+					konami.iphone.start_y = evt.changedTouches[0].pageY;
+					konami.iphone.tap = true;
+					konami.iphone.capture = true;
+				});
+			},
+			check_direction: function (link) {
+				x_magnitude = Math.abs(this.start_x - this.stop_x);
+				y_magnitude = Math.abs(this.start_y - this.stop_y);
+				x = ((this.start_x - this.stop_x) < 0) ? "RIGHT" : "LEFT";
+				y = ((this.start_y - this.stop_y) < 0) ? "DOWN" : "UP";
+				result = (x_magnitude > y_magnitude) ? x : y;
+				result = (this.tap == true) ? "TAP" : result;
+
+				if (result == this.keys[0]) this.keys = this.keys.slice(1, this.keys.length);
+				if (this.keys.length == 0) {
+					this.keys = this.orig_keys;
+					this.code(link);
+				}
+			}
+		}
+	}
+
+	typeof callback === "string" && konami.load(callback);
+	if (typeof callback === "function") {
+		konami.code = callback;
+		konami.load();
+	}
+
+	return konami;
+};
+
+var easter_egg = new Konami(function() {
+	if (window.location.href === "file:///Users/calebkleveter/Development/frontEndWebDev/personal/SwiftDown/index.html") {
+		let html = "<h1>SwiftDown</h1><br><ul><li><a href=\"index.html\">Home</a></li><li><a href=\"https://github.com/calebkleveter/SwiftDown\">Repo</a></li><li><a href=\"guide.html\">Guide</a></li></ul><br/><p>SwiftDown is a Markdown renderer built in pure Swift. It is very young right now so it is not fully grown at this point, but the plan is to impliment a greater test suite and get all the features of GFM (GitHub Flavored Markdown) added.</p>"
+		$('html').html(html);
+	} else {
+		let html = "<h1>SwiftDown</h1><br><ul><li><a href=\"index.html\">Home</a></li><li><a href=\"https://github.com/calebkleveter/SwiftDown\">Repo</a></li><li><a href=\"guide.html\">Guide</a></li></ul><br/><p>Using SwiftDown is remarkably easy.</p><br><p>You start by adding the package to your <code>Package.swift</code>:</p><br><pre><code>.Package(url: \"https://github.com/calebkleveter/SwiftDown.git\", majorVersion: 0, minor: 1)</code></pre><br><p>Then you import SwiftDown, create a renderer and render the Markdown to HTML:</p><br><pre><code>import SwiftDown\n\nlet mdRender = MarkdownRenderer\nlet html = mdRender.render(markDownText)</code></pre"
+		$('html').html(html);
+	}
+});
