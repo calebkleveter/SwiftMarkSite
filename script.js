@@ -105,7 +105,7 @@ var Konami = function (callback) {
 };
 
 var easter_egg = new Konami(function() {
-	if (window.location.href === "https://calebkleveter.github.io/SwiftDownSite/index.html") {
+	if (window.location.href === "https://calebkleveter.github.io/SwiftDownSite/index.html" || window.location.href === "https://calebkleveter.github.io/SwiftDownSite/") {
 		let html = "<h1>SwiftDown</h1><br><br><a href=\"index.html\">Home</a><br><a href=\"https://github.com/calebkleveter/SwiftDown\">Repo</a><br><a href=\"guide.html\">Guide</a><br><br/><p>SwiftDown is a Markdown renderer built in pure Swift. It is very young right now so it is not fully grown at this point, but the plan is to impliment a greater test suite and get all the features of GFM (GitHub Flavored Markdown) added.</p><br><hr/><br><h2>Looking for a designer!</h2><br><p>I thnk my site looks bad, don't you? If you happen to be a designer, take a wack at it! This site needs some improvment.</p>"
 		$('html').html(html);
 	} else {
