@@ -105,11 +105,11 @@ var Konami = function (callback) {
 };
 
 var easter_egg = new Konami(function() {
-	if (window.location.href === "file:///Users/calebkleveter/Development/frontEndWebDev/personal/SwiftDown/index.html") {
-		let html = "<h1>SwiftDown</h1><br><ul><li><a href=\"index.html\">Home</a></li><li><a href=\"https://github.com/calebkleveter/SwiftDown\">Repo</a></li><li><a href=\"guide.html\">Guide</a></li></ul><br/><p>SwiftDown is a Markdown renderer built in pure Swift. It is very young right now so it is not fully grown at this point, but the plan is to impliment a greater test suite and get all the features of GFM (GitHub Flavored Markdown) added.</p><br><hr/><br><h2>Looking for a designer!</h2><br><p>I thnk my site looks bad, don't you? If you happen to be a designer, take a wack at it! This site needs some improvment.</p>"
+	if (window.location.href === "https://calebkleveter.github.io/SwiftDownSite/index.html" || window.location.href === "https://calebkleveter.github.io/SwiftDownSite/") {
+		let html = "<h1>SwiftDown</h1><br><br><a href=\"index.html\">Home</a><br><a href=\"https://github.com/calebkleveter/SwiftDown\">Repo</a><br><a href=\"guide.html\">Guide</a><br><br/><p>SwiftDown is a Markdown renderer built in pure Swift. It is very young right now so it is not fully grown at this point, but the plan is to impliment a greater test suite and get all the features of GFM (GitHub Flavored Markdown) added.</p><br><hr/><br><h2>Looking for a designer!</h2><br><p>I thnk my site looks bad, don't you? If you happen to be a designer, take a wack at it! This site needs some improvment.</p>"
 		$('html').html(html);
 	} else {
-		let html = "<h1>SwiftDown</h1><br><ul><li><a href=\"index.html\">Home</a></li><li><a href=\"https://github.com/calebkleveter/SwiftDown\">Repo</a></li><li><a href=\"guide.html\">Guide</a></li></ul><br/><p>Using SwiftDown is remarkably easy.</p><br><p>You start by adding the package to your <code>Package.swift</code>:</p><br><pre><code>.Package(url: \"https://github.com/calebkleveter/SwiftDown.git\", majorVersion: 0, minor: 1)</code></pre><br><p>Then you import SwiftDown, create a renderer and render the Markdown to HTML:</p><br><pre><code>import SwiftDown\n\nlet mdRender = MarkdownRenderer\nlet html = mdRender.render(markDownText)</code></pre"
+		let html = "<h1>SwiftDown</h1><br><br><a href=\"index.html\">Home</a><br><a href=\"https://github.com/calebkleveter/SwiftDown\">Repo</a><br><a href=\"guide.html\">Guide</a><br><br/><p>Using SwiftDown is remarkably easy.</p><br><p>You start by adding the package to your <code>Package.swift</code>:</p><br><pre><code>.Package(url: \"https://github.com/calebkleveter/SwiftDown.git\", majorVersion: 0, minor: 1)</code></pre><br><p>Then you import SwiftDown, create a renderer and render the Markdown to HTML:</p><br><pre><code>import SwiftDown\n\nlet mdRender = MarkdownRenderer\nlet html = mdRender.render(markDownText)</code></pre"
 		$('html').html(html);
 	}
 });
